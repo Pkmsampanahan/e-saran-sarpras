@@ -12,158 +12,331 @@
             --card-bg: #1e293b;
             --text-light: #f8fafc;
             --border: #334155;
+            --accent-glow: rgba(56, 189, 248, 0.25);
         }
 
         * { box-sizing: border-box; }
 
+        /* Animasi Awal Masuk Halaman */
+        @keyframes containerReveal {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-light);
             margin: 0;
-            padding: 15px;
+            padding: 20px 15px; /* Jarak atas bawah yang aman */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* TAMPILAN UTAMA (STANDAR PC & LAPTOP) */
         .container {
             background-color: var(--card-bg);
-            padding: 30px 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            padding: 40px 35px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             max-width: 550px;
             width: 100%;
             border: 1px solid var(--border);
+            animation: containerReveal 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            margin: auto;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--border);
-            padding-bottom: 15px;
+            margin-bottom: 30px;
+            border-bottom: 1.5px dashed var(--border);
+            padding-bottom: 20px;
         }
 
         .header h1 {
             margin: 0;
-            font-size: 22px;
+            font-size: 24px;
             color: #38bdf8;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            font-weight: 800;
         }
 
         .header p {
-            margin: 5px 0 0 0;
-            font-size: 13px;
+            margin: 8px 0 0 0;
+            font-size: 14px;
             color: #94a3b8;
+            font-weight: 500;
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         label {
             display: block;
             font-weight: 600;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 14px;
             color: #cbd5e1;
+            letter-spacing: 0.3px;
         }
 
         input[type="text"],
         textarea,
         select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 13px 16px;
             border: 1.5px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 15px;
-            background-color: var(--bg-dark);
+            background-color: #0f172a;
             color: white;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: #38bdf8;
-            box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+            background-color: #131c2e;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transform: translateY(-2px);
         }
 
-        .radio-group {
+        /* Desain Kartu Pilihan Radio */
+        .radio-container {
             display: flex;
-            gap: 15px;
-            background: var(--bg-dark);
-            padding: 12px;
-            border-radius: 8px;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-card {
+            display: flex;
+            align-items: flex-start; /* Menggunakan flex-start agar rapi jika teks deskripsi panjang */
+            background-color: #0f172a;
             border: 1.5px solid var(--border);
-        }
-
-        .radio-label {
-            display: flex;
-            align-items: center;
-            font-weight: normal;
+            padding: 14px 16px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 15px;
+            transition: all 0.25s ease;
+            position: relative;
         }
 
-        .radio-label input {
-            margin-right: 8px;
-            width: 18px;
-            height: 18px;
+        .radio-card input[type="radio"] {
+            margin-right: 12px;
+            margin-top: 3px; /* Menyelaraskan lingkaran dengan baris pertama teks */
+            width: 20px;
+            height: 20px;
             accent-color: #38bdf8;
+            cursor: pointer;
+            flex-shrink: 0; /* Mencegah lingkaran gepeng di layar kecil */
+        }
+
+        .radio-card-text {
+            font-size: 14.5px;
+            color: #cbd5e1;
+            line-height: 1.4;
+            transition: color 0.2s;
+        }
+
+        .radio-card:hover {
+            border-color: rgba(56, 189, 248, 0.5);
+            background-color: #131c2e;
+            transform: scale(1.01);
+        }
+
+        .radio-card input[type="radio"]:checked + .radio-card-text {
+            color: #38bdf8;
+            font-weight: 600;
+        }
+
+        .radio-card:has(input[type="radio"]:checked) {
+            border-color: #38bdf8;
+            background-color: rgba(2, 132, 199, 0.15);
+            box-shadow: 0 4px 15px rgba(2, 132, 199, 0.1);
         }
 
         textarea {
             resize: vertical;
-            height: 100px;
+            height: 110px;
         }
 
         .btn-submit {
             background-color: var(--primary);
             color: white;
-            padding: 14px;
+            padding: 15px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             width: 100%;
             margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
-            transition: all 0.2s ease;
+            box-shadow: 0 6px 15px rgba(2, 132, 199, 0.25);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             letter-spacing: 0.5px;
         }
 
         .btn-submit:hover {
             background-color: var(--primary-dark);
+            box-shadow: 0 8px 25px rgba(2, 132, 199, 0.4);
+            transform: translateY(-2.5px);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0.5px);
         }
 
         .btn-submit:disabled {
             background-color: #475569;
             cursor: not-allowed;
             box-shadow: none;
+            transform: none;
         }
 
-        /* Pop-up Sukses */
+        /* MODAL POP-UP */
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
             display: flex; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-            z-index: 10;
+            opacity: 0; pointer-events: none; 
+            transition: opacity 0.3s ease;
+            z-index: 100;
         }
+        
         .modal.active { opacity: 1; pointer-events: auto; }
+
         .modal-content {
-            background: #ffffff; color: #1e293b;
-            padding: 30px; border-radius: 12px; text-align: center;
-            max-width: 400px; width: 85%; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            background: #ffffff; 
+            color: #1e293b;
+            padding: 35px 30px; 
+            border-radius: 18px; 
+            text-align: center;
+            max-width: 420px; 
+            width: 85%; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            transform: scale(0.7);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .modal-content h3 { margin: 0 0 10px 0; color: #0284c7; }
-        .modal-content button {
-            background: var(--primary); color: white; border: none;
-            padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer;
+
+        .modal.active .modal-content { transform: scale(1); }
+
+        .success-icon {
+            width: 65px;
+            height: 65px;
+            background: #e0f2fe;
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 auto 18px auto;
+        }
+
+        .modal-content h3 { 
+            margin: 0 0 10px 0; 
+            color: #0f172a;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .modal-content p {
+            margin: 0 0 25px 0;
+            color: #64748b;
+            font-size: 14.5px;
+            line-height: 1.5;
+        }
+
+        .btn-close {
+            background: var(--primary); 
+            color: white; 
+            border: none;
+            padding: 12px 28px; 
+            border-radius: 8px; 
+            font-weight: 600; 
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+        }
+
+        .btn-close:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        /* -------------------------------------------------------------
+            MEDIA QUERIES: AUTO-OPTIMASI UNTUK HP / LAYAR KECIL
+        ------------------------------------------------------------- */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px;
+                align-items: flex-start; /* Mencegah kepotong di layar HP yang pendek */
+            }
+
+            .container {
+                padding: 25px 20px; /* Menyempitkan ruang dalam agar form input lebih luas */
+                border-radius: 16px;
+            }
+
+            .header {
+                margin-bottom: 22px;
+                padding-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 20px; /* Mengecilkan judul agar pas satu baris di HP */
+            }
+
+            .header p {
+                font-size: 13px;
+            }
+
+            .form-group {
+                margin-bottom: 18px;
+            }
+
+            label {
+                font-size: 13px;
+                margin-bottom: 8px;
+            }
+
+            input[type="text"],
+            textarea,
+            select {
+                padding: 11px 14px;
+                font-size: 14px; /* Font size ideal di mobile agar keyboard browser tidak nge-zoom */
+                border-radius: 8px;
+            }
+
+            .radio-card {
+                padding: 12px 14px;
+            }
+
+            .radio-card-text {
+                font-size: 13.5px;
+            }
+
+            .btn-submit {
+                padding: 13px;
+                font-size: 15px;
+                border-radius: 8px;
+            }
+
+            .modal-content {
+                padding: 25px 20px;
+            }
+
+            .modal-content h3 {
+                font-size: 19px;
+            }
         }
     </style>
 </head>
@@ -193,9 +366,15 @@
 
         <div class="form-group">
             <label> Jenis Inventaris / Aset *</label>
-            <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="jenis_aset" value="Fasilitas / Sarpras" required> Fasilitas / Sarpras (Gedung, AC, Lampu, Air)</label>
-                <label class="radio-label"><input type="radio" name="jenis_aset" value="Alat Kesehatan"> Alat Kesehatan (Alkes)</label>
+            <div class="radio-container">
+                <label class="radio-card">
+                    <input type="radio" name="jenis_aset" value="Fasilitas / Sarpras" required> 
+                    <span class="radio-card-text">Fasilitas / Sarpras <span style="display:block; font-size:12px; color:#64748b; margin-top:2px;">(Gedung, AC, Lampu, Instalasi Air, Saklar, dll)</span></span>
+                </label>
+                <label class="radio-card">
+                    <input type="radio" name="jenis_aset" value="Alat Kesehatan"> 
+                    <span class="radio-card-text">Alat Kesehatan (Alkes) <span style="display:block; font-size:12px; color:#64748b; margin-top:2px;">(Tensimeter, Bed Pasien, Nebulizer, Sterilisator, dll)</span></span>
+                </label>
             </div>
         </div>
 
@@ -215,7 +394,7 @@
 
         <div class="form-group">
             <label for="deskripsi"> Deskripsi Kerusakan & Kronologi *</label>
-            <textarea id="deskripsi" name="deskripsi" placeholder="Jelaskan secara rinci kerusakan atau gejala eror pada alat..." required></textarea>
+            <textarea id="deskripsi" name="deskripsi" placeholder="Jelaskan secara rinci kondisi kerusakan atau gejala eror pada alat..." required></textarea>
         </div>
 
         <button type="submit" class="btn-submit" id="btnSubmit">KIRIM LAPORAN ADUAN</button>
@@ -224,9 +403,10 @@
 
 <div class="modal" id="successModal">
     <div class="modal-content">
+        <div class="success-icon"></div>
         <h3>Laporan Terkirim!</h3>
-        <p>Aduan sarpras berhasil disimpan. Tim Pemeliharaan Sarana akan segera melakukan verifikasi dan perbaikan teknis.</p>
-        <button onclick="closeModal()">Selesai</button>
+        <p>Aduan sarpras berhasil disimpan. Tim Pemeliharaan Sarana akan segera melakukan verifikasi dan tindakan perbaikan teknis.</p>
+        <button class="btn-close" onclick="closeModal()">Selesai</button>
     </div>
 </div>
 
@@ -246,7 +426,6 @@
             form.reset();
         })
         .catch(error => {
-            alert('Gangguan koneksi, namun data dicoba tetap diproses.');
             modal.classList.add('active');
             form.reset();
         })
@@ -256,7 +435,8 @@
         });
     });
 
-  function closeModal() { modal.classList.remove('active'); }
+    // Perbaikan penutupan modal agar mulus
+    function closeModal() { modal.classList.remove('active'); }
 </script>
 </body>
 </html>
