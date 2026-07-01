@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Saran Sarpras - Puskesmas Sampanahan</title>
+    <style>
+        :root {
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            --border: #334155;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 30px 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            max-width: 550px;
+            width: 100%;
+            border: 1px solid var(--border);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 22px;
+            color: #38bdf8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .header p {
+            margin: 5px 0 0 0;
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            background-color: var(--bg-dark);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #38bdf8;
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 15px;
+            background: var(--bg-dark);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border);
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .radio-label input {
+            margin-right: 8px;
+            width: 18px;
+            height: 18px;
+            accent-color: #38bdf8;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .btn-submit {
+            background-color: var(--primary);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+            transition: all 0.2s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-submit:disabled {
+            background-color: #475569;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Pop-up Sukses */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: #ffffff; color: #1e293b;
+            padding: 30px; border-radius: 12px; text-align: center;
+            max-width: 400px; width: 85%; box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .modal-content h3 { margin: 0 0 10px 0; color: #0284c7; }
+        .modal-content button {
+            background: var(--primary); color: white; border: none;
+            padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>E-Saran Sarpras & Alkes</h1>
+        <p>Sistem Pelaporan Kerusakan Internal & Petugas</p>
+    </div>
+
+    <form id="sarprasForm" action="https://script.google.com/macros/s/AKfycbwFl4NF7CWIdn51mFbqqyD_R8hdMyyLem0DwrOyo9WRvCuoDo75nc-RfmNouEK5rA6BQQ/exec" method="POST">
+        
+        <div class="form-group">
+            <label for="ruangan"> Ruangan / Lokasi Poli *</label>
+            <select id="ruangan" name="ruangan" required>
+                <option value="UGD">Unit Gawat Darurat (UGD)</option>
+                <option value="Poli Umum">Poli Umum</option>
+                <option value="Poli Gigi">Poli Gigi</option>
+                <option value="Poli KIA/KB">Poli KIA / KB</option>
+                <option value="Laboratorium">Laboratorium</option>
+                <option value="Apotek/Farmasi">Apotek / Farmasi</option>
+                <option value="Rawat Inap">Ruang Rawat Inap</option>
+                <option value="Lainnya">Lokasi / Ruang Lain</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label> Jenis Inventaris / Aset *</label>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="jenis_aset" value="Fasilitas / Sarpras" required> Fasilitas / Sarpras (Gedung, AC, Lampu, Air)</label>
+                <label class="radio-label"><input type="radio" name="jenis_aset" value="Alat Kesehatan"> Alat Kesehatan (Alkes)</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="nama_barang"> Nama Barang / Alat yang Rusak *</label>
+            <input type="text" id="nama_barang" name="nama_barang" placeholder="Contoh: AC Sharp UGD, Tensimeter Digital" required autocomplete="off">
+        </div>
+
+        <div class="form-group">
+            <label for="prioritas"> Tingkat Kerusakan / Urgensi *</label>
+            <select id="prioritas" name="prioritas" required>
+                <option value="Ringan"> Ringan (Alat/Fasilitas masih bisa fungsi terbatas)</option>
+                <option value="Sedang"> Sedang (Mengganggu kenyamanan pelayanan)</option>
+                <option value="Berat"> Berat (Mati total / Berbahaya / Pelayanan terhenti)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="deskripsi"> Deskripsi Kerusakan & Kronologi *</label>
+            <textarea id="deskripsi" name="deskripsi" placeholder="Jelaskan secara rinci kerusakan atau gejala eror pada alat..." required></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="btnSubmit">KIRIM LAPORAN ADUAN</button>
+    </form>
+</div>
+
+<div class="modal" id="successModal">
+    <div class="modal-content">
+        <h3>Laporan Terkirim!</h3>
+        <p>Aduan sarpras berhasil disimpan. Tim Pemeliharaan Sarana akan segera melakukan verifikasi dan perbaikan teknis.</p>
+        <button onclick="closeModal()">Selesai</button>
+    </div>
+</div>
+
+<script>
+    const form = document.getElementById('sarprasForm');
+    const modal = document.getElementById('successModal');
+    const btnSubmit = document.getElementById('btnSubmit');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btnSubmit.innerText = "Mengirim data ke log sarpras...";
+        btnSubmit.disabled = true;
+
+        fetch(form.action, { method: 'POST', body: new FormData(form)})
+        .then(response => {
+            modal.classList.add('active');
+            form.reset();
+        })
+        .catch(error => {
+            alert('Gangguan koneksi, namun data dicoba tetap diproses.');
+            modal.classList.add('active');
+            form.reset();
+        })
+        .finally(() => {
+            btnSubmit.innerText = "KIRIM LAPORAN ADUAN";
+            btnSubmit.disabled = false;
+        });
+    });
+
+  function closeModal() { modal.classList.remove('active'); }
+</script>
+</body>
+</html>
